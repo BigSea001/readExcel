@@ -33,7 +33,7 @@ public class ExcelReaderUtil {
         // <string name="msg_verify_pin_failure">验证PIN失败</string>
         String[] split = oneLine.split("==");
         StringBuilder znSb = new StringBuilder();
-        znSb.append("<string name=\"");
+        znSb.append("    <string name=\"");
         if (split.length>2) {
             znSb.append(split[0]);
             znSb.append("\">");
@@ -52,7 +52,7 @@ public class ExcelReaderUtil {
         }
 
         StringBuilder enSb = new StringBuilder();
-        enSb.append("<string name=\"");
+        enSb.append("    <string name=\"");
         if (split.length>2) {
             enSb.append(split[0]);
             enSb.append("\">");
@@ -82,6 +82,10 @@ public class ExcelReaderUtil {
             throw new Exception("文件格式错误，fileName的扩展名只能是xls或xlsx。");
         }
         System.out.println("发送的总行数：" + totalRows);
+        fos.write("</resources>".getBytes(),0,"</resources>".length());
+        fos.flush();
+        fos1.write("</resources>".getBytes(),0,"</resources>".length());
+        fos1.flush();
     }
 
     /**
@@ -89,9 +93,13 @@ public class ExcelReaderUtil {
      * fos1输出英文字符串
      */
     public static void main(String[] args) throws Exception {
-        fos = new FileOutputStream("D:\\zn_string2.txt",true);
-        fos1 = new FileOutputStream("D:\\en_string2.txt",true);
+        fos = new FileOutputStream("D:\\zn_string2.xml",false);
+        fos1 = new FileOutputStream("D:\\en_string2.xml",false);
         String path = "D:\\v2.xlsx";
+        fos.write("<resources>\n".getBytes(),0,"<resources>\n".length());
+        fos.flush();
+        fos1.write("<resources>\n".getBytes(),0,"<resources>\n".length());
+        fos1.flush();
         ExcelReaderUtil.readExcel(path);
     }
 }
